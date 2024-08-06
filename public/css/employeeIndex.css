@@ -1,0 +1,101 @@
+.container{
+    width: 90%;
+    /* background-color: #6fc276; */
+    padding: 0 20px;
+    height: 80%;
+
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1{
+    padding: 0;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.btn.addEmployee{
+    background-color: #6fc276;
+    width: 15%;
+    padding: 7px 0;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    transition: all 0.5s ease;
+    border: 2px solid #212b2a;
+    align-content: center;
+}
+
+.btn.addEmployee:hover{
+    box-shadow: 0 4px 8px 0 #6fc276;
+    transform: translateY(-2.5px);
+}
+
+#employeeTable{
+    margin-bottom: 15px;
+}
+
+#employeeTable_wrapper{
+    margin: 10px 0;
+    border: 2px solid #212b2a;
+    padding: 15px;
+    border-radius: 10px;
+    min-height: 80%;
+}
+
+#employeeTable_filter{
+    margin-bottom: 5px;
+}
+
+#employeeTable_filter label input{
+    margin-left: 10px;
+}
+
+#employeeTable tr{
+    height: 42px;
+    text-align: center;
+}
+
+#employeeTable tbody td{
+    padding: 0;
+}
+
+#employeeTable tbody tr{
+    font-size: 14px;
+}
+
+.act{
+    padding: 7px;
+    margin: 0 10px;
+    font-size: 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 2px solid #212b2a;
+    transition: all 0.5s ease;
+}
+
+.act.update{
+    color: #6488EA;
+}
+
+.act.delete{
+    color: #f94449;
+}
+
+.act:hover{
+    color: white;
+}
+
+.act.update:hover{
+    background-color: #6488EA;
+}
+
+.act.delete:hover{
+    background-color: #f94449;
+}
