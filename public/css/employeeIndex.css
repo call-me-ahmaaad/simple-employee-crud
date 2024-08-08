@@ -1,25 +1,28 @@
-.container{
+.container {
     width: 90%;
     /* background-color: #6fc276; */
-    padding: 0 20px;
+    /* padding: 0 20px; */
     height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
 }
 
-.header{
+.header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
-h1{
+h1 {
     padding: 0;
     margin: 10px 0;
     text-align: center;
 }
 
-.btn.addEmployee{
+.btn.addEmployee {
     background-color: #6fc276;
     width: 15%;
     padding: 7px 0;
@@ -32,45 +35,51 @@ h1{
     align-content: center;
 }
 
-.btn.addEmployee:hover{
+.btn.addEmployee:hover {
     box-shadow: 0 4px 8px 0 #6fc276;
     transform: translateY(-2.5px);
 }
 
-#employeeTable{
+#employeeTable {
     margin-bottom: 15px;
 }
 
-#employeeTable_wrapper{
-    margin: 10px 0;
+#employeeTable_wrapper {
+    margin: 10px 0 0 0;
     border: 2px solid #212b2a;
     padding: 15px;
     border-radius: 10px;
     min-height: 80%;
 }
 
-#employeeTable_filter{
+#employeeTable_filter {
     margin-bottom: 5px;
 }
 
-#employeeTable_filter label input{
+#employeeTable_filter label input {
     margin-left: 10px;
 }
 
-#employeeTable tr{
+#employeeTable tr {
     height: 42px;
     text-align: center;
 }
 
-#employeeTable tbody td{
+#employeeTable tbody td {
     padding: 0;
 }
 
-#employeeTable tbody tr{
+#employeeTable tbody tr {
     font-size: 14px;
 }
 
-.act{
+#employeeTable_wrapper .dataTables_paginate .paginate_button {
+    border-radius: 6px;
+    font-size: 14px;
+    margin: 0 3px;
+}
+
+.act {
     padding: 7px;
     margin: 0 10px;
     font-size: 10px;
@@ -80,22 +89,59 @@ h1{
     transition: all 0.5s ease;
 }
 
-.act.update{
+.act.update {
     color: #6488EA;
 }
 
-.act.delete{
+.act.delete {
     color: #f94449;
 }
 
-.act:hover{
+.act:hover {
     color: white;
 }
 
-.act.update:hover{
+.act.update:hover {
     background-color: #6488EA;
 }
 
-.act.delete:hover{
+.act.delete:hover {
     background-color: #f94449;
+}
+
+@media only screen and (max-height: 675px) {
+    #employeeTable_wrapper {
+        min-height: 75%;
+    }
+
+    .btn.addEmployee {
+        width: 17%;
+    }
+}
+
+@media only screen and (max-height: 594px) {
+    #employeeTable_wrapper {
+        min-height: 75%;
+        font-size: 12px;
+        border: 1.5px solid #212b2a;
+    }
+
+    .act{
+        border: 1.5px solid #212b2a;
+    }
+
+    .btn.addEmployee {
+        border: 1.5px solid #212b2a;
+        width: 19%;
+    }
+}
+
+@media only screen and (max-height: 495px) {
+    #employeeTable_wrapper {
+        min-height: 70%;
+    }
+
+    .btn.addEmployee {
+        width: 21%;
+    }
 }

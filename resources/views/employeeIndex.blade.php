@@ -57,13 +57,50 @@
         </table>
         <script>
             $(document).ready(function() {
-                $('#employeeTable').DataTable({
-                    "paging": true,
-                    "searching": true,
-                    "ordering": true,
-                    "info": true,
-                    "pageLength": 10, // Set the number of entries per page
-                    "lengthChange": false
+                // Configuration object to map screen height to pageLength
+                var pageLengthConfig = {
+                    768: 8,
+                    675: 7,
+                    594: 6,
+                    495: 4,
+                    default: 9 // Default page length for larger heights
+                };
+
+                function getPageLength() {
+                    var screenHeight = window.innerHeight;
+
+                    // Find the appropriate page length based on screen height
+                    for (var height in pageLengthConfig) {
+                        if (screenHeight <= height) {
+                            return pageLengthConfig[height];
+                        }
+                    }
+
+                    return pageLengthConfig.default; // Return default if no match found
+                }
+
+                function initializeDataTable() {
+                    var pageLength = getPageLength();
+
+                    $('#employeeTable').DataTable({
+                        "paging": true,
+                        "searching": true,
+                        "ordering": true,
+                        "info": true,
+                        "pageLength": pageLength,
+                        "lengthChange": false,
+                        pagingType: 'full_numbers',
+                        destroy: true // Allow reinitialization of the table
+                    });
+                }
+
+                // Initialize DataTable on page load
+                initializeDataTable();
+
+                // Reinitialize DataTable on window resize
+                $(window).resize(function() {
+                    $('#employeeTable').DataTable().destroy();
+                    initializeDataTable();
                 });
             });
         </script>

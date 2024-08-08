@@ -41,7 +41,12 @@ class EmployeeController extends Controller
         $employeeName = $validatedData['name'];
         Employee::create($validatedData);
 
-        return redirect()->route('employee.index')->with('success', 'Succesfully added <strong>'. $employeeName .'</strong> as a new employee');
+        // Hanya kembalikan respons JSON untuk permintaan AJAX
+        if ($request->ajax()) {
+            return response()->json(['success' => 'Succesfully added <strong>'. $employeeName .'</strong> as a new employee']);
+        }
+
+        return redirect()->route('employee.index')->with('success', 'Succesfully added <strong>' . $employeeName . '</strong> as a new employee');
     }
 
     public function web_employee_edit($id)
@@ -80,6 +85,11 @@ class EmployeeController extends Controller
 
         $employee->update($validatedData);
 
+        // Hanya kembalikan respons JSON untuk permintaan AJAX
+        if ($request->ajax()) {
+            return response()->json(['success' => 'Employee <strong>' . $employeeName . '</strong> successfully updated']);
+        }
+
         return redirect()->route('employee.index')->with('success', 'Employee <strong>' . $employeeName . '</strong> successfully updated');
     }
 
@@ -99,6 +109,10 @@ class EmployeeController extends Controller
 
         $employeeName = $deletedEmployee->name;
         $deletedEmployee->delete();
+
+        if ($request->ajax()) {
+            return response()->json(['success' => 'Employee <strong>' . $employeeName . '</strong> successfully deleted']);
+        }
 
         return redirect()->route('employee.index')->with('success', 'Employee <strong>' . $employeeName . '</strong> successfully deleted');
     }

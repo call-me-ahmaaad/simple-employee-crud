@@ -4,7 +4,7 @@
 @endsection
 @section('container')
     <!-- Display error messages -->
-    @if ($errors->any())
+    {{-- @if ($errors->any())
         <script>
             let errorMessage = '<ul style="text-align: left;">';
             @foreach ($errors->all() as $error)
@@ -19,8 +19,7 @@
                 timer: 3000
             });
         </script>
-    @endif
-
+    @endif --}}
 
     <div class="container">
         <h2>ADD NEW EMPLOYEE</h2>
@@ -72,6 +71,7 @@
         document.getElementById('addForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission
             const form = this;
+
             Swal.fire({
                 title: "Add New Employee?",
                 text: "Are you sure you want to add this new employee?",
@@ -83,8 +83,41 @@
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Submit the form manually
-                    form.submit();
+                    // Submit the form via AJAX
+                    $.ajax({
+                        url: form.action,
+                        method: form.method,
+                        data: $(form).serialize(),
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Success!",
+                                html: response.success,
+                                icon: "success",
+                                timer: 3000
+                            }).then(() => {
+                                window.location.href = "{{ route('employee.index') }}";
+                            });
+                        },
+                        error: function(xhr) {
+                            if (xhr.status === 422) {
+                                let errorMessage = '<ul style="text-align: left;">';
+                                const errors = xhr.responseJSON.errors;
+                                for (let field in errors) {
+                                    if (errors.hasOwnProperty(field)) {
+                                        errorMessage += '<li>' + errors[field][0] + '</li>';
+                                    }
+                                }
+                                errorMessage += '</ul>';
+
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Oops...",
+                                    html: errorMessage,
+                                    timer: 3000
+                                });
+                            }
+                        }
+                    });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     Swal.fire({
                         title: "Cancelled!",

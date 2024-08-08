@@ -57,19 +57,74 @@
         document.getElementById('deleteForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission
             const form = this;
+            // Swal.fire({
+            //     title: "Delete Employee Data?",
+            //     text: "Are you sure you want to delete this employee's data? This action cannot be undone.",
+            //     icon: "warning",
+            //     confirmButtonText: "Yes, delete it!",
+            //     showCancelButton: true,
+            //     confirmButtonColor: "#d33",
+            //     cancelButtonColor: "#3085d6",
+            //     reverseButtons: true
+            // }).then((result) => {
+            //     if (result.isConfirmed) {
+            //         // Submit the form manually
+            //         form.submit();
+            //     } else if (result.dismiss === Swal.DismissReason.cancel) {
+            //         Swal.fire({
+            //             title: "Cancelled!",
+            //             text: "The employee deletion has been cancelled.",
+            //             icon: "error"
+            //         });
+            //     }
+            // });
+
             Swal.fire({
-                title: "Delete Employee Data?",
-                text: "Are you sure you want to delete this employee's data? This action cannot be undone.",
-                icon: "warning",
-                confirmButtonText: "Yes, delete it!",
+                title: "Remove {{$employee->name}} from your list?",
+                text: "Are you sure you want to remove this employee?",
+                icon: "question",
+                confirmButtonText: "Yes, remove it!",
                 showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Submit the form manually
-                    form.submit();
+                    // Submit the form via AJAX
+                    $.ajax({
+                        url: form.action,
+                        method: form.method,
+                        data: $(form).serialize(),
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Success!",
+                                html: response.success,
+                                icon: "success",
+                                timer: 3000
+                            }).then(() => {
+                                window.location.href = "{{ route('employee.index') }}";
+                            });
+                        },
+                        error: function(xhr) {
+                            if (xhr.status === 422) {
+                                let errorMessage = '<ul style="text-align: left;">';
+                                const errors = xhr.responseJSON.errors;
+                                for (let field in errors) {
+                                    if (errors.hasOwnProperty(field)) {
+                                        errorMessage += '<li>' + errors[field][0] + '</li>';
+                                    }
+                                }
+                                errorMessage += '</ul>';
+
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Oops...",
+                                    html: errorMessage,
+                                    timer: 3000
+                                });
+                            }
+                        }
+                    });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     Swal.fire({
                         title: "Cancelled!",
