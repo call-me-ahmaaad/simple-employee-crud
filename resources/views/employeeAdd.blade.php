@@ -3,27 +3,9 @@
     <link rel="stylesheet" href="{{ URL::asset('/css/employeeForm.css') }}">
 @endsection
 @section('container')
-    <!-- Display error messages -->
-    {{-- @if ($errors->any())
-        <script>
-            let errorMessage = '<ul style="text-align: left;">';
-            @foreach ($errors->all() as $error)
-                errorMessage += '<li>{!! $error !!}</li>';
-            @endforeach
-            errorMessage += '</ul>';
-
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                html: errorMessage, // Use html to render the <ul> and <li> tags
-                timer: 3000
-            });
-        </script>
-    @endif --}}
-
     <div class="container">
         <h2>ADD NEW EMPLOYEE</h2>
-        <form class="employeeForm Add" id="addForm" action="{{ route('employee.store') }}" method="POST" novalidate>
+        <form class="employeeForm Add" id="addForm" action="{{ route('employee.store') }}" method="POST" novalidate autocomplete="off">
             @csrf
             <div class="inputField name">
                 <label for="name">Name</label>
@@ -53,7 +35,7 @@
                 <label for="religion">Religion</label>
                 <select name="religion" id="religion" required>
                     @php
-                        $religions = ['Islam', 'Kristen Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'];
+                        $religions = ['Islam', 'Protestantism', 'Catholicism', 'Hinduism', 'Buddhism', 'Confucianism'];
                     @endphp
                     @foreach ($religions as $religion)
                         <option value="{{ $religion }}">{{ $religion }}</option>
@@ -63,7 +45,7 @@
             <div class="action">
                 <button class="btnForm cancel" type="button"
                     onclick="location.href='{{ route('employee.index') }}'">Cancel</button>
-                <button class="btnForm submit" type="submit">Submit</button>
+                <button class="btnForm submit" type="submit">Add</button>
             </div>
         </form>
     </div>

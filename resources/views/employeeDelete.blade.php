@@ -3,23 +3,6 @@
     <link rel="stylesheet" href="{{ URL::asset('/css/employeeForm.css') }}">
 @endsection
 @section('container')
-    <!-- Display error messages -->
-    @if ($errors->any())
-        <script>
-            let errorMessage = '';
-            @foreach ($errors->all() as $error)
-                errorMessage += '{{ $error }}\n';
-            @endforeach
-
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: errorMessage,
-                timer: 3000
-            });
-        </script>
-    @endif
-
     <div class="container">
         <h1>DELETE EMPLOYEE DATA</h1>
         <form class="employeeForm Delete" id="deleteForm" action="{{ route('employee.destroy', $employee->id) }}"
@@ -49,7 +32,7 @@
             <div class="action">
                 <button class="btnForm cancel" type="button"
                     onclick="location.href='{{ route('employee.index') }}'">Cancel</button>
-                <button class="btnForm submit" type="submit">Submit</button>
+                <button class="btnForm submit" type="submit">Delete</button>
             </div>
         </form>
     </div>
@@ -57,30 +40,8 @@
         document.getElementById('deleteForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission
             const form = this;
-            // Swal.fire({
-            //     title: "Delete Employee Data?",
-            //     text: "Are you sure you want to delete this employee's data? This action cannot be undone.",
-            //     icon: "warning",
-            //     confirmButtonText: "Yes, delete it!",
-            //     showCancelButton: true,
-            //     confirmButtonColor: "#d33",
-            //     cancelButtonColor: "#3085d6",
-            //     reverseButtons: true
-            // }).then((result) => {
-            //     if (result.isConfirmed) {
-            //         // Submit the form manually
-            //         form.submit();
-            //     } else if (result.dismiss === Swal.DismissReason.cancel) {
-            //         Swal.fire({
-            //             title: "Cancelled!",
-            //             text: "The employee deletion has been cancelled.",
-            //             icon: "error"
-            //         });
-            //     }
-            // });
-
             Swal.fire({
-                title: "Remove {{$employee->name}} from your list?",
+                title: "Remove {{ $employee->name }} from your list?",
                 text: "Are you sure you want to remove this employee?",
                 icon: "question",
                 confirmButtonText: "Yes, remove it!",

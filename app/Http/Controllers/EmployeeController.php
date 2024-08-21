@@ -27,6 +27,7 @@ class EmployeeController extends Controller
             'position.required' => 'The <strong>Position</strong> field is mandatory.',
             'phone_number.required' => 'The <strong>Phone Number</strong> field is mandatory.',
             'phone_number.unique' => 'The <strong>phone number</strong> has already been taken.',
+            'phone_number.regex' => 'The <strong>Phone Number</strong> must be in the format: 0812-3456-7891.',
             'religion.required' => 'The <strong>Religion</strong> field is mandatory.',
         ];
 
@@ -34,7 +35,12 @@ class EmployeeController extends Controller
             'name' => 'required|string|max:255',
             'birth_date' => 'required|date',
             'position' => 'required|string|max:255',
-            'phone_number' => 'required|string|unique:employees,phone_number',
+            'phone_number' => [
+                'required',
+                'string',
+                'unique:employees,phone_number',
+                'regex:/^[0-9]{4}-[0-9]{4}-[0-9]{2,5}$/'
+            ],
             'religion' => 'required|string|max:255',
         ], $messages);
 
@@ -43,7 +49,7 @@ class EmployeeController extends Controller
 
         // Hanya kembalikan respons JSON untuk permintaan AJAX
         if ($request->ajax()) {
-            return response()->json(['success' => 'Succesfully added <strong>'. $employeeName .'</strong> as a new employee']);
+            return response()->json(['success' => 'Succesfully added <strong>' . $employeeName . '</strong> as a new employee']);
         }
 
         return redirect()->route('employee.index')->with('success', 'Succesfully added <strong>' . $employeeName . '</strong> as a new employee');
@@ -72,6 +78,7 @@ class EmployeeController extends Controller
             'position.required' => 'The <strong>Position</strong> field is mandatory.',
             'phone_number.required' => 'The <strong>Phone Number</strong> field is mandatory.',
             'phone_number.unique' => 'The <strong>phone number</strong> has already been taken.',
+            'phone_number.regex' => 'The <strong>Phone Number</strong> must be in the format: 0812-3456-7891.',
             'religion.required' => 'The <strong>Religion</strong> field is mandatory.',
         ];
 
@@ -79,7 +86,12 @@ class EmployeeController extends Controller
             'name' => 'required|string|max:255',
             'birth_date' => 'required|date',
             'position' => 'required|string|max:255',
-            'phone_number' => 'required|string|unique:employees,phone_number,' . $employee->id,
+            'phone_number' => [
+                'required',
+                'string',
+                'unique:employees,phone_number,'. $employee->id,
+                'regex:/^[0-9]{4}-[0-9]{4}-[0-9]{2,5}$/'
+            ],
             'religion' => 'required|string|max:255',
         ], $messages);
 

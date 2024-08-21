@@ -3,27 +3,10 @@
     <link rel="stylesheet" href="{{ URL::asset('/css/employeeForm.css') }}">
 @endsection
 @section('container')
-    <!-- Display error messages -->
-    @if ($errors->any())
-        <script>
-            let errorMessage = '<ul style="text-align: left;">';
-            @foreach ($errors->all() as $error)
-                errorMessage += '<li>{!! $error !!}</li>';
-            @endforeach
-            errorMessage += '</ul>';
-
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                html: errorMessage, // Use html to render the <ul> and <li> tags
-                timer: 3000
-            });
-        </script>
-    @endif
     <div class="container">
         <h2>EDIT EMPLOYEE DATA</h2>
         <form class="employeeForm Edit" id="editForm" action="{{ route('employee.update', $employee->id) }}" method="POST"
-            novalidate>
+            novalidate autocomplete="off">
             @csrf
             @method('PUT')
             <div class="inputField name">
@@ -58,7 +41,7 @@
                 <select name="religion" id="religion" required>
                     <option value="{{ $employee->religion }}">{{ $employee->religion }}</option>
                     @php
-                        $religions = ['Islam', 'Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'];
+                        $religions = ['Islam', 'Protestantism', 'Catholicism', 'Hinduism', 'Buddhism', 'Confucianism'];
                     @endphp
                     @foreach ($religions as $religion)
                         @if ($religion != $employee->religion)
@@ -70,7 +53,7 @@
             <div class="action">
                 <button class="btnForm cancel" type="button"
                     onclick="location.href='{{ route('employee.index') }}'">Cancel</button>
-                <button class="btnForm submit" type="submit">Submit</button>
+                <button class="btnForm submit" type="submit">Update</button>
             </div>
         </form>
     </div>
